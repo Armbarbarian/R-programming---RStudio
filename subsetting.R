@@ -82,6 +82,48 @@ mx[1, , drop=F]
 
 
 
+# ---------------------partial matching subsetting---------------------
+# can do with [[]] and $
+# better to use in the command line than in the code, when trying to find something quickly
+
+xl <- list(aardvark = 1:5)
+xl$a # 1, 2, 3, 4, 5 
+
+xl[['a']] # NULL as no elecment with name 'a'
+
+# get around with exact = False
+
+xl[['a', exact=F]] # 1, 2, 3, 4, 5
+
+# -------------------remove NA values----------------------
+# common in data analysis to remove the Na or NaN values
+# strip out the Na or NaN
+
+rvector <- c(1, 2, NA, 3, NA, 4, 5)
+bad <- is.na(rvector)
+bad # FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE -  which does have na values
+rvector[!bad] # 1, 2, 3 ,4 ,5 - ! is opposite of bad here
+
+# multiple vectors and objects?
+
+numbers <- c(1, 2, NA, 3, NA, 4)
+letters <- c('a', 'b', NA, 'c', NA, 'd')
+good <- complete.cases(numbers, letters) # all values apart from NA or NAN
+good # TRUE  TRUE FALSE  TRUE FALSE  TRUE
+numbers[good] # 1 2 3 4
+letters[good] # "a" "b" "c" "d"
+
+# ---------------from dataframes !!!! ----------------------------
+# can't make this work properly, I get a table of NA values returned...
+newdf <- data.frame(chromosome = 1:4, SNP = c(4, 7, NA, 2), phenotype = c(7, NA, 10, NA))
+newdf
+good <- complete.cases(newdf)
+newdf[good,][1:4, ]
+
+newdf[good, ][1:4, ]
+
+
+
 
 
 
